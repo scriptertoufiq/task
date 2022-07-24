@@ -33,6 +33,9 @@ Route::get('/shop/search/', [App\Http\Controllers\frontend\HomePageController::c
 Route::get('/shop/category/', [App\Http\Controllers\frontend\HomePageController::class, 'shop_category'])->name('shop_category');
 
 
+Route::post('/stripe/payment', [App\Http\Controllers\frontend\CartController::class, 'stripe_payment'])->name('stripe.post');
+
+
 
 
 

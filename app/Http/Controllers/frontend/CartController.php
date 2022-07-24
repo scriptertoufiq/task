@@ -6,6 +6,9 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Http\Controllers\Controller;
 use App\Models\admin\Shop;
 use Illuminate\Http\Request;
+use Laravel\Ui\Presets\React;
+use Stripe;
+use Symfony\Component\CssSelector\Parser\Token;
 
 class CartController extends Controller
 {
@@ -93,5 +96,27 @@ class CartController extends Controller
     {
         Cart::remove($id);
         return redirect()->back();
+    }
+
+
+
+
+
+    public function stripe_payment(Request $request)
+    {
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        $token = Token::create([
+            "amount" => 100 * 100,
+            "currency" => "usd",
+            "source" => $request->stripeToken,
+            "description" => "Test payment from itsolutionstuff.com."
+        ]);
+
+        $notification = array(
+            'messege' => 'Payment Done Succesfully',
+            'alert-type' => 'success',
+        );
+
+        return back();
     }
 }
